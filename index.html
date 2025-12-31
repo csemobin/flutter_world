@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile App Development Hub - Complete Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+        }
+
+        .category-badge {
+            transition: all 0.3s ease;
+        }
+
+        .category-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .search-box {
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .topic-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .topic-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .stats-counter {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .7; }
+        }
+
+        .hero-pattern {
+            background-color: #667eea;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .difficulty-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+
+        .difficulty-beginner {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .difficulty-intermediate {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .difficulty-advanced {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator" id="scrollProgress"></div>
+
+    <!-- Hero Section -->
+    <header class="hero-pattern text-white py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-600/30 to-indigo-800/30"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center max-w-5xl mx-auto">
+                <div class="floating-animation inline-block mb-6">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-4 inline-block">
+                        <i class="fas fa-mobile-alt text-6xl"></i>
+                    </div>
+                </div>
+                <h1 class="text-6xl md:text-7xl font-black mb-6 leading-tight">
+                    Mobile App Development
+                    <span class="block text-5xl md:text-6xl mt-2">Documentation Hub</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-purple-100 mb-8 leading-relaxed">
+                    Your comprehensive guide to Flutter, React Native, Android & iOS development
+                </p>
+                
+                <!-- Search Box -->
+                <div class="max-w-2xl mx-auto mb-8">
+                    <div class="search-box bg-white rounded-full shadow-2xl overflow-hidden">
+                        <div class="flex items-center px-6 py-4">
+                            <i class="fas fa-search text-gray-400 text-xl mr-4"></i>
+                            <input 
+                                type="text" 
+                                id="searchInput"
+                                placeholder="Search topics, features, or tutorials..." 
+                                class="flex-1 outline-none text-gray-800 text-lg"
+                            >
+                            <button class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2 rounded-full font-semibold hover:shadow-lg transition">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+                        <div class="stats-counter text-white">150+</div>
+                        <div class="text-purple-100 font-semibold">Topics</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+                        <div class="stats-counter text-white">25+</div>
+                        <div class="text-purple-100 font-semibold">Categories</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+                        <div class="stats-counter text-white">500+</div>
+                        <div class="text-purple-100 font-semibold">Code Examples</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+                        <div class="stats-counter text-white">100+</div>
+                        <div class="text-purple-100 font-semibold">Tutorials</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative elements -->
+        <div class="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full blur-2xl"></div>
+        <div class="absolute bottom-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+    </header>
+
+    <!-- Platform Selection -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-8 gradient-text">Choose Your Platform</h2>
+            <div class="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                <div class="category-badge bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl p-6 text-center cursor-pointer shadow-lg">
+                    <i class="fab fa-android text-5xl mb-3"></i>
+                    <h3 class="text-xl font-bold">Flutter</h3>
+                    <p class="text-sm text-blue-100 mt-2">Cross-platform</p>
+                </div>
+                <div class="category-badge bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-6 text-center cursor-pointer shadow-lg">
+                    <i class="fab fa-react text-5xl mb-3"></i>
+                    <h3 class="text-xl font-bold">React Native</h3>
+                    <p class="text-sm text-purple-100 mt-2">JavaScript</p>
+                </div>
+                <div class="category-badge bg-gradient-to-br from-green-500 to-green-600 text-white rounded-xl p-6 text-center cursor-pointer shadow-lg">
+                    <i class="fab fa-android text-5xl mb-3"></i>
+                    <h3 class="text-xl font-bold">Android</h3>
+                    <p class="text-sm text-green-100 mt-2">Kotlin/Java</p>
+                </div>
+                <div class="category-badge bg-gradient-to-br from-gray-700 to-gray-800 text-white rounded-xl p-6 text-center cursor-pointer shadow-lg">
+                    <i class="fab fa-apple text-5xl mb-3"></i>
+                    <h3 class="text-xl font-bold">iOS</h3>
+                    <p class="text-sm text-gray-300 mt-2">Swift/SwiftUI</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+
+            <!-- Navigation Tabs -->
+            <div class="mb-12">
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <button class="tab-btn active px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold shadow-lg" data-category="all">
+                        <i class="fas fa-th mr-2"></i> All Topics
+                    </button>
+                    <button class="tab-btn px-6 py-3 rounded-full bg-white text-gray-700 font-semibold shadow hover:shadow-lg transition" data-category="ui">
+                        <i class="fas fa-paint-brush mr-2"></i> UI/UX
+                    </button>
+                    <button class="tab-btn px-6 py-3 rounded-full bg-white text-gray-700 font-semibold shadow hover:shadow-lg transition" data-category="media">
+                        <i class="fas fa-image mr-2"></i> Media
+                    </button>
+                    <button class="tab-btn px-6 py-3 rounded-full bg-white text-gray-700 font-semibold shadow hover:shadow-lg transition" data-category="data">
+                        <i class="fas fa-database mr-2"></i> Data
+                    </button>
+                    <button class="tab-btn px-6 py-3 rounded-full bg-white text-gray-700 font-semibold shadow hover:shadow-lg transition" data-category="network">
+                        <i class="fas fa-network-wired mr-2"></i> Network
+                    </button>
+                    <button class="tab-btn px-6 py-3 rounded-full bg-white text-gray-700 font-semibold shadow hover:shadow-lg transition" data-category="advanced">
+                        <i class="fas fa-rocket mr-2"></i> Advanced
+                    </button>
+                </div>
+            </div>
+
+            <!-- Topics Grid -->
+            <div id="topicsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Image Handling -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="media">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-purple-100 to-purple-200 text-purple-600">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Image Handling</h3>
+                            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Complete guide to image picking, displaying, caching, and optimization in Flutter apps.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full">Image Picker</span>
+                        <span class="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full">Caching</span>
+                        <span class="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full">Optimization</span>
+                    </div>
+                    <a href="flutter_image_handler.html" target="_blank" class="inline-flex items-center text-purple-600 font-semibold hover:text-purple-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- State Management -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="data">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-blue-100 to-blue-200 text-blue-600">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">State Management</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Master GetX, Provider, Bloc, and Riverpod for effective state management in Flutter.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full">GetX</span>
+                        <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Provider</span>
+                        <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Bloc</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Authentication -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="network">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-green-100 to-green-200 text-green-600">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Authentication</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Implement secure authentication with Firebase, JWT, OAuth, and biometric login.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full">Firebase</span>
+                        <span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full">JWT</span>
+                        <span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full">OAuth</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-green-600 font-semibold hover:text-green-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- UI Components -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="ui">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-pink-100 to-pink-200 text-pink-600">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">UI Components</h3>
+                            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Build beautiful custom widgets, buttons, cards, and reusable components.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-pink-100 text-pink-700 px-3 py-1 rounded-full">Widgets</span>
+                        <span class="text-xs bg-pink-100 text-pink-700 px-3 py-1 rounded-full">Themes</span>
+                        <span class="text-xs bg-pink-100 text-pink-700 px-3 py-1 rounded-full">Animations</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-pink-600 font-semibold hover:text-pink-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- API Integration -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="network">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-indigo-100 to-indigo-200 text-indigo-600">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">API Integration</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        REST APIs, GraphQL, WebSockets, and effective HTTP client implementation.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">REST</span>
+                        <span class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">GraphQL</span>
+                        <span class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">Dio</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-indigo-600 font-semibold hover:text-indigo-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Local Storage -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="data">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-600">
+                            <i class="fas fa-save"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Local Storage</h3>
+                            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        SharedPreferences, SQLite, Hive, and secure storage for offline-first apps.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">SQLite</span>
+                        <span class="text-xs bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">Hive</span>
+                        <span class="text-xs bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">Secure Storage</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-yellow-600 font-semibold hover:text-yellow-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Navigation & Routing -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="ui">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-red-100 to-red-200 text-red-600">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Navigation & Routing</h3>
+                            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Master navigation patterns, deep linking, and route management in Flutter.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full">Navigator 2.0</span>
+                        <span class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full">GetX Routes</span>
+                        <span class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full">Deep Links</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-red-600 font-semibold hover:text-red-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Push Notifications -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="network">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-orange-100 to-orange-200 text-orange-600">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Push Notifications</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        FCM, local notifications, scheduling, and notification handling strategies.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-orange-100 text-orange-700 px-3 py-1 rounded-full">FCM</span>
+                        <span class="text-xs bg-orange-100 text-orange-700 px-3 py-1 rounded-full">Local</span>
+                        <span class="text-xs bg-orange-100 text-orange-700 px-3 py-1 rounded-full">Scheduling</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-orange-600 font-semibold hover:text-orange-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Camera & Gallery -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="media">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Camera & Gallery</h3>
+                            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Access camera, gallery, image cropping, and photo manipulation features.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-teal-100 text-teal-700 px-3 py-1 rounded-full">Camera</span>
+                        <span class="text-xs bg-teal-100 text-teal-700 px-3 py-1 rounded-full">Gallery</span>
+                        <span class="text-xs bg-teal-100 text-teal-700 px-3 py-1 rounded-full">Cropping</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-teal-600 font-semibold hover:text-teal-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Forms & Validation -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="ui">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-cyan-100 to-cyan-200 text-cyan-600">
+                            <i class="fas fa-list-check"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Forms & Validation</h3>
+                            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Build complex forms with validation, error handling, and user feedback.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full">Validation</span>
+                        <span class="text-xs bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full">TextFields</span>
+                        <span class="text-xs bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full">FormBuilder</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-cyan-600 font-semibold hover:text-cyan-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Maps & Location -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="advanced">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-emerald-100 to-emerald-200 text-emerald-600">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Maps & Location</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Google Maps, location tracking, geocoding, and geofencing implementation.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full">Google Maps</span>
+                        <span class="text-xs bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full">GPS</span>
+                        <span class="text-xs bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full">Geofencing</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-emerald-600 font-semibold hover:text-emerald-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Payment Integration -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="advanced">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-violet-100 to-violet-200 text-violet-600">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Payment Integration</h3>
+                            <span class="difficulty-badge difficulty-advanced">Advanced</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Integrate Stripe, PayPal, Razorpay, and in-app purchases for monetization.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-violet-100 text-violet-700 px-3 py-1 rounded-full">Stripe</span>
+                        <span class="text-xs bg-violet-100 text-violet-700 px-3 py-1 rounded-full">PayPal</span>
+                        <span class="text-xs bg-violet-100 text-violet-700 px-3 py-1 rounded-full">IAP</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-violet-600 font-semibold hover:text-violet-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Video Player -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="media">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-rose-100 to-rose-200 text-rose-600">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Video Player</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Implement video playback, streaming, custom controls, and video editing.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-rose-100 text-rose-700 px-3 py-1 rounded-full">Video Player</span>
+                        <span class="text-xs bg-rose-100 text-rose-700 px-3 py-1 rounded-full">Streaming</span>
+                        <span class="text-xs bg-rose-100 text-rose-700 px-3 py-1 rounded-full">Controls</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-rose-600 font-semibold hover:text-rose-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Animations -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="ui">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-fuchsia-100 to-fuchsia-200 text-fuchsia-600">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Animations</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Create smooth animations, transitions, and motion design in your apps.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-fuchsia-100 text-fuchsia-700 px-3 py-1 rounded-full">Implicit</span>
+                        <span class="text-xs bg-fuchsia-100 text-fuchsia-700 px-3 py-1 rounded-full">Explicit</span>
+                        <span class="text-xs bg-fuchsia-100 text-fuchsia-700 px-3 py-1 rounded-full">Lottie</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-fuchsia-600 font-semibold hover:text-fuchsia-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Testing -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="advanced">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-lime-100 to-lime-200 text-lime-600">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Testing</h3>
+                            <span class="difficulty-badge difficulty-advanced">Advanced</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Unit testing, widget testing, integration testing, and test automation.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-lime-100 text-lime-700 px-3 py-1 rounded-full">Unit Tests</span>
+                        <span class="text-xs bg-lime-100 text-lime-700 px-3 py-1 rounded-full">Widget Tests</span>
+                        <span class="text-xs bg-lime-100 text-lime-700 px-3 py-1 rounded-full">Integration</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-lime-600 font-semibold hover:text-lime-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Performance Optimization -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="advanced">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-amber-100 to-amber-200 text-amber-600">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Performance</h3>
+                            <span class="difficulty-badge difficulty-advanced">Advanced</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        App optimization, memory management, build optimization, and profiling.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-amber-100 text-amber-700 px-3 py-1 rounded-full">Optimization</span>
+                        <span class="text-xs bg-amber-100 text-amber-700 px-3 py-1 rounded-full">Memory</span>
+                        <span class="text-xs bg-amber-100 text-amber-700 px-3 py-1 rounded-full">Profiling</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-amber-600 font-semibold hover:text-amber-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Bluetooth -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="advanced">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-sky-100 to-sky-200 text-sky-600">
+                            <i class="fas fa-bluetooth"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Bluetooth & BLE</h3>
+                            <span class="difficulty-badge difficulty-advanced">Advanced</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Bluetooth classic and BLE communication for IoT device connectivity.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-sky-100 text-sky-700 px-3 py-1 rounded-full">Bluetooth</span>
+                        <span class="text-xs bg-sky-100 text-sky-700 px-3 py-1 rounded-full">BLE</span>
+                        <span class="text-xs bg-sky-100 text-sky-700 px-3 py-1 rounded-full">IoT</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-sky-600 font-semibold hover:text-sky-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Charts & Graphs -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="ui">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-red-100 to-red-200 text-red-600">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Charts & Graphs</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Data visualization with charts, graphs, and interactive dashboards.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full">FL Chart</span>
+                        <span class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full">Syncfusion</span>
+                        <span class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full">Custom</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-red-600 font-semibold hover:text-red-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Biometric Auth -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="advanced">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-purple-100 to-purple-200 text-purple-600">
+                            <i class="fas fa-fingerprint"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Biometric Auth</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Fingerprint, Face ID, and other biometric authentication methods.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full">Fingerprint</span>
+                        <span class="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full">Face ID</span>
+                        <span class="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full">Local Auth</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-purple-600 font-semibold hover:text-purple-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- QR Code & Barcode -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="media">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-green-100 to-green-200 text-green-600">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">QR & Barcode</h3>
+                            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Scan and generate QR codes, barcodes, and other 2D codes in your app.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full">QR Scanner</span>
+                        <span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full">Generator</span>
+                        <span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full">Barcode</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-green-600 font-semibold hover:text-green-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Background Tasks -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="advanced">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-indigo-100 to-indigo-200 text-indigo-600">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Background Tasks</h3>
+                            <span class="difficulty-badge difficulty-advanced">Advanced</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Execute tasks in background, WorkManager, and background fetch.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">WorkManager</span>
+                        <span class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">Isolates</span>
+                        <span class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">Scheduling</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-indigo-600 font-semibold hover:text-indigo-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Audio Player -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="media">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-blue-100 to-blue-200 text-blue-600">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Audio Player</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Audio playback, recording, streaming, and music player functionality.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Player</span>
+                        <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Recording</span>
+                        <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Streaming</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- File Management -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="data">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-600">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">File Management</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        File picker, document viewer, PDF handling, and file system operations.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">File Picker</span>
+                        <span class="text-xs bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">PDF</span>
+                        <span class="text-xs bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">Documents</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-yellow-600 font-semibold hover:text-yellow-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Social Login -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="network">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-pink-100 to-pink-200 text-pink-600">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Social Login</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Google, Facebook, Apple, and Twitter sign-in implementation.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-pink-100 text-pink-700 px-3 py-1 rounded-full">Google</span>
+                        <span class="text-xs bg-pink-100 text-pink-700 px-3 py-1 rounded-full">Facebook</span>
+                        <span class="text-xs bg-pink-100 text-pink-700 px-3 py-1 rounded-full">Apple</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-pink-600 font-semibold hover:text-pink-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Crash Analytics -->
+                <div class="feature-card card-hover rounded-2xl p-6 shadow-lg" data-category="advanced">
+                    <div class="flex items-start mb-4">
+                        <div class="topic-icon bg-gradient-to-br from-red-100 to-red-200 text-red-600">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-1">Crash Analytics</h3>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Firebase Crashlytics, Sentry, and error tracking for production apps.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full">Crashlytics</span>
+                        <span class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full">Sentry</span>
+                        <span class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full">Logging</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center text-red-600 font-semibold hover:text-red-700 transition">
+                        Read Documentation <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- No Results Message -->
+            <div id="noResults" class="hidden text-center py-20">
+                <div class="text-6xl mb-4">🔍</div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">No Topics Found</h3>
+                <p class="text-gray-600">Try adjusting your search or filter criteria</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Popular Learning Paths -->
+    <section class="py-16 bg-gradient-to-br from-purple-50 to-indigo-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4 gradient-text">🎯 Learning Paths</h2>
+            <p class="text-center text-gray-600 mb-12 text-lg">Structured roadmaps to master mobile development</p>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Beginner Path -->
+                <div class="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition">
+                    <div class="bg-gradient-to-br from-green-400 to-emerald-500 w-16 h-16 rounded-full flex items-center justify-center mb-6 text-white text-2xl">
+                        🌱
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Beginner Path</h3>
+                    <p class="text-gray-600 mb-6">Start your mobile dev journey from scratch</p>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            Flutter Basics
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            UI Components
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            Navigation
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            Forms & Validation
+                        </li>
+                    </ul>
+                    <button class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition">
+                        Start Learning
+                    </button>
+                </div>
+
+                <!-- Intermediate Path -->
+                <div class="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition">
+                    <div class="bg-gradient-to-br from-blue-400 to-indigo-500 w-16 h-16 rounded-full flex items-center justify-center mb-6 text-white text-2xl">
+                        🚀
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Intermediate Path</h3>
+                    <p class="text-gray-600 mb-6">Level up your skills with advanced topics</p>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            State Management
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            API Integration
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            Authentication
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            Push Notifications
+                        </li>
+                    </ul>
+                    <button class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition">
+                        Start Learning
+                    </button>
+                </div>
+
+                <!-- Advanced Path -->
+                <div class="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition">
+                    <div class="bg-gradient-to-br from-purple-400 to-pink-500 w-16 h-16 rounded-full flex items-center justify-center mb-6 text-white text-2xl">
+                        ⚡
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Advanced Path</h3>
+                    <p class="text-gray-600 mb-6">Master professional development</p>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            Performance Optimization
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            Testing & CI/CD
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            Payment Integration
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            App Deployment
+                        </li>
+                    </ul>
+                    <button class="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition">
+                        Start Learning
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl p-12 text-white">
+                <h2 class="text-4xl font-bold mb-4">Stay Updated!</h2>
+                <p class="text-xl text-purple-100 mb-8">Get the latest tutorials and updates delivered to your inbox</p>
+                <div class="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+                    <input 
+                        type="email" 
+                        placeholder="Enter your email" 
+                        class="flex-1 px-6 py-4 rounded-full text-gray-800 outline-none text-lg"
+                    >
+                    <button class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold hover:shadow-xl transition">
+                        Subscribe
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Tutorials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">API Reference</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Code Examples</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Video Courses</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Forum</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Connect</h3>
+                    <div class="flex gap-4">
+                        <a href="#" class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center hover:bg-white/20 transition">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center hover:bg-white/20 transition">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center hover:bg-white/20 transition">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                        <a href="#" class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center hover:bg-white/20 transition">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Mobile App Development Hub. All rights reserved.</p>
+                <p class="mt-2">Built with ❤️ for developers worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-gradient-to-r from-purple-600 to-indigo-600 text-white w-14 h-14 rounded-full shadow-2xl hidden hover:shadow-3xl transition items-center justify-center">
+        <i class="fas fa-arrow-up text-xl"></i>
+    </button>
+
+    <script>
+        // Scroll Progress Indicator
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = scrollPercentage + '%';
+
+            // Back to Top Button
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) {
+                backToTop.classList.remove('hidden');
+                backToTop.classList.add('flex');
+            } else {
+                backToTop.classList.add('hidden');
+                backToTop.classList.remove('flex');
+            }
+        });
+
+        // Back to Top Functionality
+        document.getElementById('backToTop').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Tab Filtering
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const topicCards = document.querySelectorAll('.feature-card');
+        const noResults = document.getElementById('noResults');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state
+                tabBtns.forEach(b => {
+                    b.classList.remove('bg-gradient-to-r', 'from-purple-600', 'to-indigo-600', 'text-white');
+                    b.classList.add('bg-white', 'text-gray-700');
+                });
+                btn.classList.remove('bg-white', 'text-gray-700');
+                btn.classList.add('bg-gradient-to-r', 'from-purple-600', 'to-indigo-600', 'text-white');
+
+                const category = btn.dataset.category;
+                let visibleCount = 0;
+
+                topicCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Show/hide no results message
+                if (visibleCount === 0) {
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                }
+            });
+        });
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            let visibleCount = 0;
+
+            topicCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                const tags = Array.from(card.querySelectorAll('.text-xs')).map(tag => tag.textContent.toLowerCase()).join(' ');
+
+                if (title.includes(searchTerm) || description.includes(searchTerm) || tags.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show/hide no results message
+            if (visibleCount === 0 && searchTerm !== '') {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            // Reset filter if search is cleared
+            if (searchTerm === '') {
+                tabBtns[0].click(); // Click "All Topics" tabF
+            }
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

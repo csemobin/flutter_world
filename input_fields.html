@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flutter Form Fields - Complete Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6C63FF;
+            --secondary-color: #4834DF;
+            --accent-color: #5F27CD;
+            --text-dark: #2C3E50;
+            --text-light: #7F8C8D;
+            --bg-light: #F8F9FA;
+            --bg-white: #FFFFFF;
+            --border-color: #E1E8ED;
+            --success-color: #27AE60;
+            --warning-color: #F39C12;
+            --danger-color: #E74C3C;
+            --code-bg: #282C34;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--bg-white);
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--bg-white);
+            padding: 20px 40px;
+            border-bottom: 3px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav a {
+            display: block;
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        nav a:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        nav a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Content */
+        .content {
+            padding: 60px 40px;
+        }
+
+        section {
+            margin-bottom: 80px;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid var(--primary-color);
+            position: relative;
+            font-weight: 700;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: var(--accent-color);
+        }
+
+        section h3 {
+            color: var(--secondary-color);
+            font-size: 1.8em;
+            margin: 40px 0 20px 0;
+            font-weight: 600;
+        }
+
+        section h4 {
+            color: var(--text-dark);
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+            font-weight: 600;
+        }
+
+        /* Field Cards */
+        .field-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .field-card {
+            background: var(--bg-light);
+            border-left: 6px solid var(--primary-color);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .field-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .field-card h4 {
+            color: var(--primary-color);
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .field-icon {
+            font-size: 1.8em;
+        }
+
+        /* Screenshot Container */
+        .screenshot-container {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .screenshot-container img {
+            max-width: 400px;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .screenshot-label {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.95em;
+        }
+
+        /* Code Blocks */
+        .code-container {
+            position: relative;
+            margin: 25px 0;
+        }
+
+        .code-header {
+            background: var(--code-bg);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px 8px 0 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: #ABB2BF;
+            padding: 25px;
+            border-radius: 0 0 8px 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .keyword { color: #C678DD; font-weight: 600; }
+        .string { color: #98C379; }
+        .comment { color: #5C6370; font-style: italic; }
+        .function { color: #61AFEF; }
+        .number { color: #D19A66; }
+        .operator { color: #56B6C2; }
+
+        .copy-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Tables */
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .property-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1em;
+        }
+
+        .property-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-white);
+        }
+
+        .property-table tr:hover td {
+            background: var(--bg-light);
+        }
+
+        .property-table code {
+            background: var(--code-bg);
+            color: #61AFEF;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+            margin-right: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-required {
+            background: linear-gradient(135deg, #FF6B6B, #EE5A6F);
+            color: white;
+        }
+
+        .badge-optional {
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+            color: white;
+        }
+
+        .badge-validation {
+            background: linear-gradient(135deg, #F39C12, #E67E22);
+            color: white;
+        }
+
+        .badge-reactive {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        /* Feature Lists */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 15px 0;
+            padding-left: 40px;
+            position: relative;
+            font-size: 1.05em;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+            font-size: 1.5em;
+            top: 12px;
+        }
+
+        /* Notes and Alerts */
+        .note {
+            background: linear-gradient(135deg, #FFF3CD, #FFF8E1);
+            border-left: 6px solid var(--warning-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .note strong {
+            color: #856404;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .tip {
+            background: linear-gradient(135deg, #D1ECF1, #D4EDDA);
+            border-left: 6px solid var(--success-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .tip strong {
+            color: #155724;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .warning {
+            background: linear-gradient(135deg, #F8D7DA, #F5C6CB);
+            border-left: 6px solid var(--danger-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .warning strong {
+            color: #721C24;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .comparison-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .comparison-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .comparison-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2em; }
+            header p { font-size: 1em; }
+            .content { padding: 30px 20px; }
+            section h2 { font-size: 1.8em; }
+            nav ul { flex-direction: column; }
+            .field-showcase { grid-template-columns: 1fr; }
+            .comparison-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="wrapper">
+        <div class="container">
+            <header>
+                <h1>📱 Flutter Form Fields</h1>
+                <p>Professional Implementation Guide with Live Examples</p>
+                <div class="header-badge">GetX • Flutter 3.x • Production Ready</div>
+            </header>
+
+            <nav>
+                <ul>
+                    <li><a href="#overview">📋 Overview</a></li>
+                    <li><a href="#date-picker">📅 Date Picker</a></li>
+                    <li><a href="#phone-field">📞 Phone Number</a></li>
+                    <li><a href="#text-area">📝 Text Area</a></li>
+                    <li><a href="#controller">🎮 Controller</a></li>
+                    <li><a href="#setup">⚙️ Setup</a></li>
+                </ul>
+            </nav>
+
+            <div class="content">
+                <!-- Overview Section -->
+                <section id="overview">
+                    <h2>📋 Project Overview</h2>
+                    
+                    <p style="font-size: 1.15em; line-height: 1.8; margin-bottom: 30px;">
+                        This comprehensive guide demonstrates three essential form fields commonly used in Flutter applications. 
+                        Each component is designed with attention to user experience, proper validation, and follows Flutter best practices 
+                        using GetX state management.
+                    </p>
+
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <div class="icon">📅</div>
+                            <h4>Date of Birth</h4>
+                            <p>Interactive calendar picker with formatted date output (DD-MM-YYYY)</p>
+                        </div>
+                        <div class="comparison-card">
+                            <div class="icon">📞</div>
+                            <h4>Phone Number</h4>
+                            <p>International phone input with country code selection and flags</p>
+                        </div>
+                        <div class="comparison-card">
+                            <div class="icon">📝</div>
+                            <h4>About Me</h4>
+                            <p>Multi-line text area with real-time word count (max 200 words)</p>
+                        </div>
+                    </div>
+
+                    <div class="tip">
+                        <strong>💡 Why This Implementation?</strong>
+                        This implementation uses GetX for efficient state management, provides excellent user feedback, 
+                        includes proper validation, and follows Material Design guidelines for a consistent user experience.
+                    </div>
+                </section>
+
+                <!-- Date Picker Section -->
+                <section id="date-picker">
+                    <h2>📅 Date of Birth Field</h2>
+
+                    <div class="screenshot-container">
+                        <img src="data:image/png;base64,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" alt="Date of Birth Field">
+                        <div class="screenshot-label">Date of Birth Field UI</div>
+                    </div>
+
+                    <div class="field-card">
+                        <h4><span class="field-icon">✨</span>Key Features</h4>
+                        <ul class="feature-list">
+                            <li>Calendar icon for easy date selection</li>
+                            <li>Date format: DD-MM-YYYY with automatic formatting</li>
+                            <li>Date range: 1950 to current date</li>
+                            <li>Custom styling with Poppins font</li>
+                            <li>Consistent border styling across all states</li>
+                            <li>Read-only input to prevent manual typing errors</li>
+                        </ul>
+                    </div>
+
+                    <h3>📝 Complete Implementation</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>date_of_birth_field.dart</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                        </div>
+                        <div class="code-block">
+<pre><code><span class="keyword">Column</span>(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    <span class="keyword">Text</span>(
+      <span class="string">'Date of Birth'</span>,
+      style: <span class="keyword">TextStyle</span>(
+        fontFamily: FontFamily.poppins,
+        color: AppColors.labelTextColor,
+        fontSize: 12.h,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    <span class="keyword">SizedBox</span>(height: 4.h),
+    <span class="keyword">TextField</span>(
+      style: <span class="keyword">TextStyle</span>(
+        color: AppColors.greyColor500,
+        fontSize: 12
+      ),
+      cursorColor: AppColors.appGreyColor,
+      controller: controller.textController,
+      <span class="comment">// Makes the field read-only</span>
+      readOnly: <span class="keyword">true</span>,
+      decoration: <span class="keyword">InputDecoration</span>(
+        fillColor: AppColors.whiteColor,
+        filled: <span class="keyword">true</span>,
+        hintText: <span class="string">'DD-MM-YYYY'</span>,
+        hintStyle: <span class="keyword">TextStyle</span>(color: Colors.red),
+        suffixIcon: <span class="keyword">IconButton</span>(
+          icon: <span class="keyword">Icon</span>(Icons.calendar_today),
+          onPressed: () <span class="keyword">async</span> {
+            <span class="comment">// Show date picker dialog</span>
+            DateTime? pickedDate = <span class="keyword">await</span> showDatePicker(
+              context: context,
+              firstDate: DateTime(1950),
+              lastDate: DateTime.now(),
+              initialDate: DateTime.now(),
+            );
+            <span class="keyword">if</span> (pickedDate != <span class="keyword">null</span>) {
+              <span class="comment">// Format date as DD-MM-YYYY</span>
+              String formattedData = 
+                <span class="string">"</span>${pickedDate.day.toString().padLeft(2, <span class="string">'0'</span>)}-${pickedDate.month.toString().padLeft(2, <span class="string">'0'</span>)}-${pickedDate.year}<span class="string">"</span>;
+              controller.textController.text = formattedData;
+            }
+          },
+        ),
+        border: <span class="keyword">OutlineInputBorder</span>(
+          borderSide: <span class="keyword">BorderSide</span>(width: 0.8, color: AppColors.grayShade100),
+          borderRadius: <span class="keyword">BorderRadius</span>.all(<span class="keyword">Radius</span>.circular(8)),
+        ),
+        focusedBorder: <span class="keyword">OutlineInputBorder</span>(
+          borderSide: <span class="keyword">BorderSide</span>(width: 0.8, color: AppColors.grayShade100),
+          borderRadius: <span class="keyword">BorderRadius</span>.all(<span class="keyword">Radius</span>.circular(8)),
+        ),
+        disabledBorder: <span class="keyword">OutlineInputBorder</span>(
+          borderSide: <span class="keyword">BorderSide</span>(width: 0.8, color: AppColors.grayShade100),
+          borderRadius: <span class="keyword">BorderRadius</span>.all(<span class="keyword">Radius</span>.circular(8)),
+        ),
+        enabledBorder: <span class="keyword">OutlineInputBorder</span>(
+          borderSide: <span class="keyword">BorderSide</span>(width: 0.8, color: AppColors.grayShade100),
+          borderRadius: <span class="keyword">BorderRadius</span>.all(<span class="keyword">Radius</span>.circular(8)),
+        ),
+      ),
+      keyboardType: TextInputType.datetime,
+    ),
+  ],
+)</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>🎯 Key Properties</h3>
+                    <table class="property-table">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>controller</code></td>
+                                <td>TextEditingController</td>
+                                <td>Controls the text field input and output</td>
+                            </tr>
+                            <tr>
+                                <td><code>readOnly</code></td>
+                                <td>bool</td>
+                                <td>Prevents manual typing, forces date picker usage</td>
+                            </tr>
+                            <tr>
+                                <td><code>firstDate</code></td>
+                                <td>DateTime</td>
+                                <td>Earliest selectable date (1950)</td>
+                            </tr>
+                            <tr>
+                                <td><code>lastDate</code></td>
+                                <td>DateTime</td>
+                                <td>Latest selectable date (current date)</td>
+                            </tr>
+                            <tr>
+                                <td><code>hintText</code></td>
+                                <td>String</td>
+                                <td>Placeholder text showing date format</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="note">
+                        <strong>💡 Implementation Tip:</strong> 
+                        The date is automatically formatted with leading zeros for single-digit days and months using 
+                        <code>padLeft(2, '0')</code>. Setting <code>readOnly: true</code> ensures users can only select dates 
+                        through the picker, preventing invalid manual entries.
+                    </div>
+                </section>
+
+                <!-- Phone Field Section -->
+                <section id="phone-field">
+                    <h2>📞 Phone Number Field</h2>
+
+                    <div class="screenshot-container">
+                        <img src="data:image/png;base64,UklGRlQIAABXRUJQVlA4WAoAAAAgAAAAZAEAbwAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggZgYAAPApAJ0BKmUBcAA+USiRRqOioaEhtglocAoJaW72QDfAOFfarHAN5gyLnw9/RO07++9G35Y9keMWyS/G/kZ6mfar5m7Wf+Q/KTgCgAfi/9G/2H2tek1qTdJP2c/KL+f/7fjdvGPYA/i/9X/0f3VfSx/L/878ufV39Lf+L3Bv5p/Xf+D63nr+9EX9qhTUXJrUQfBqcNELZo4reYUYKWNdZKyHWRrCU8/ZdaiD4NThoTwzXExblTWJtd0RSjnlDQLURQCkNx2LOHEgXjWZ6c3KbZYHEb5pdETCwXulqa2ulxkPbcWtZFAAujJ5IGaBK1vHP8GTIct0atonZSj+FWLMv63GQfYw8IrCH3shlvhPo+7fidtmOmH4V8iEXKvnQge4Xt83Ibn1BKxzs393jv+AWwRzUlaGk9OakrQ0npregOK7SpevMjPUhyuTWog+DNoOUE/xGtXDbGwAAP7/S/hhfEADZt7Sf5yAxfD+eNvyguvzzKWdd/3heJza8av+Pq4h5gKKvkL170f1yUP26SUdPUwiuSixTo603GmkeN9doBdxDda/NnP/yb1aHoi+LkOI0lkDUPmvPp/+06WFZD7K5pzuV0iUqFoV7lellSmE288SLlkrKtXN9gxo1nDpt2eLYpeKuyWUFTVwfIpsipgcgVjGvDn05TFTZYrzyy+aNOl2DTRpY+Zie+EuHSBGRDpNUUGCPKgRCengJ85Vbohhd9m8y0ByidI3boW9jDVxGJbqijEohJNfPGImy67wA2q+tS4Q+ON08InGgzkv+aAc7RHZG03f9kUUoFHGuo7JqRhZuE7h9BqrM6nAk7qVTeZ1stsqd/3EDS9X933DfB/hiz/tuqYQvUclVLUxEyRLtDn1rvYEsbqLuqyxlIxjLXXCrXJQ6MX9D42v/2U04W2u7xCKwXZqsjcyjK3bTzq6ONjDWvD+DwbW9qSCBnbPuPn3d7ZqjiGziOZVYwvp8KqFZfdE+QqOFyadwIPfwyFoqXSAS49EOg1W7bca/LCvuoM/rp/YEvMXe2Zpk27jy/NZHgNb3ay+AP/inmASNf/2gREC3bS15hjZ+PvnG0QRvkazH4aULFO92gUvqOeq1Q4nUGbXtS2193fYRwdJZ6XbdrpDK/LWL7GsZo2XT++Qc/M0Bzw6fNbNcWVGH2tfjpTfA2OByPMFuBgB/u8bh4dFGwNOXOMXNQxLz4vbRqwgJdXAnGOi/CKPxBG8/cX5C5l6WSEuWGT7Uw7iPq32gbcRQ6PPJ5pSPPeyEw6/lnr/3DvRY1Yg4nxSFENaYNAY/yq9Sq6PU5fkXukyBJvAGpzNHAG90tGvgAAK/HZLqsvFVxzyDyVToAvhTS9P5EKDRdeDItPzPWFzZbZ5UA/YPVwhGNIu8693AeXfhdEWkH8GW2Qe3MlAdUOr1OzqQlHA9/nSBhgf83H8h3QO3F8A7sO4nXS179PYOx80WEchgsl7C9C43AGynvKnEvm7EmFRm9Mu7Ttlhp6V6lqj/pb6KPnCKiHiHd0Wf8FqZuaMEC/Kv4FfD6s/8u+z+JD/tbOWlcNMQ+yHBd2rwuE7//D/U1mixLu9/8M+3vdXTnNAOEkn69WQKAmESR/yb+K6svliOmdQjrfgL1GdZ8bKX8F1ONA2yHeJ5HzlLnz+KWBnoCCJi7DzvH4JLCC6/hLEa3s1uHs22+HSqVmaZ2tMggJCh3S1epSKcYPyinJbiHCP6r4o1/3HERLRifwwxTjw5SyfM5Fek42oOjpOtnCk/Mznfx9l1/KcUyeeItFVunfwKUsGF6btJlGQ0WZ3NqZiFN6oGwQLErsQUnzU8hf9UnwOHTJwn7nZdONXKMsQaQIwYQ5aZSTDC41XJflpkmRkJEsQyAF9/Sj4PVOHfOqDXKsC0qUH/GnpinWcd2mFJ+Z0TepP1dcTXD9ktgsSR1PZejECPAC4ZoX0v84fJMFVqfI26BYmF+x+AAQFcTSZ3MavSSm8dvho3z6v4BSAb+0dP3hzUHoGOVqD0DHK1B6Bjee5/pj3WYSj+thlDWECXEDBaKu3YN8aRCLuv1/6u+y5Gyjiaq0byX97s2Jwav1mM5wIA0AsU/tEG4+hox2l0ec32Kfstj/+FbFgTl/SbJnR+RPElZZ3VlVxThGH5vVvvkbEpUOtw+3r/befvEWVfOEu5LRBBkCpViG1AAAAAA==" alt="Phone Number Field">
+                        <div class="screenshot-label">International Phone Number Field UI</div>
+                    </div>
+
+                    <div class="field-card">
+                        <h4><span class="field-icon">✨</span>Key Features</h4>
+                        <ul class="feature-list">
+                            <li>International country code selection with flags</li>
+                            <li>Automatic phone number formatting per country</li>
+                            <li>Visual country identification with flag icons</li>
+                            <li>Dropdown icon positioning on trailing edge</li>
+                            <li>Built-in validation for phone numbers</li>
+                            <li>Character limit indicator (0/10)</li>
+                        </ul>
+                    </div>
+
+                    <h3>📝 Complete Implementation</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>phone_number_field.dart</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                        </div>
+                        <div class="code-block">
+<pre><code><span class="keyword">Column</span>(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    <span class="keyword">Text</span>(
+      <span class="string">'Phone Number'</span>,
+      style: <span class="keyword">TextStyle</span>(
+        fontFamily: FontFamily.poppins,
+        color: AppColors.labelTextColor,
+        fontSize: 12.h,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    <span class="keyword">SizedBox</span>(height: 4.h),
+    <span class="keyword">IntlPhoneField</span>(
+      cursorColor: AppColors.greyColor,
+      flagsButtonMargin: EdgeInsets.only(left: 10),
+      dropdownIconPosition: IconPosition.trailing,
+      decoration: <span class="keyword">const InputDecoration</span>(
+        hintText: <span class="string">'Phone number'</span>,
+        hintStyle: <span class="keyword">TextStyle</span>(
+          color: AppColors.greyColor,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
+        contentPadding: EdgeInsets.all(6),
+        filled: <span class="keyword">true</span>,
+        counterStyle: <span class="keyword">TextStyle</span>(color: AppColors.greyColor),
+        fillColor: AppColors.whiteColor,
+        border: <span class="keyword">OutlineInputBorder</span>(
+          borderSide: <span class="keyword">BorderSide</span>(width: 0.8, color: AppColors.grayShade100),
+          borderRadius: <span class="keyword">BorderRadius</span>.all(<span class="keyword">Radius</span>.circular(8)),
+        ),
+        focusedBorder: <span class="keyword">OutlineInputBorder</span>(
+          borderSide: <span class="keyword">BorderSide</span>(width: 0.8, color: AppColors.grayShade100),
+          borderRadius: <span class="keyword">BorderRadius</span>.all(<span class="keyword">Radius</span>.circular(8)),
+        ),
+        disabledBorder: <span class="keyword">OutlineInputBorder</span>(
+          borderSide: <span class="keyword">BorderSide</span>(width: 0.8, color: AppColors.grayShade100),
+          borderRadius: <span class="keyword">BorderRadius</span>.all(<span class="keyword">Radius</span>.circular(8)),
+        ),
+        enabledBorder: <span class="keyword">OutlineInputBorder</span>(
+          borderSide: <span class="keyword">BorderSide</span>(width: 0.8, color: AppColors.grayShade100),
+          borderRadius: <span class="keyword">BorderRadius</span>.all(<span class="keyword">Radius</span>.circular(8)),
+        ),
+      ),
+      languageCode: <span class="string">"en"</span>,
+      <span class="comment">// Callback when phone number changes</span>
+      onChanged: (phone) {
+        print(phone.completeNumber); <span class="comment">// Full phone with country code</span>
+      },
+    ),
+  ],
+)</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>📦 Required Package</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>pubspec.yaml</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                        </div>
+                        <div class="code-block">
+<pre><code>dependencies:
+  intl_phone_field: <span class="string">^3.2.0</span>  <span class="comment"># Or latest version</span></code></pre>
+                        </div>
+                    </div>
+
+                    <h3>🎯 Key Properties</h3>
+                    <table class="property-table">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>languageCode</code></td>
+                                <td>String</td>
+                                <td>Language for country names (default: "en")</td>
+                            </tr>
+                            <tr>
+                                <td><code>flagsButtonMargin</code></td>
+                                <td>EdgeInsets</td>
+                                <td>Spacing around the flag button</td>
+                            </tr>
+                            <tr>
+                                <td><code>dropdownIconPosition</code></td>
+                                <td>IconPosition</td>
+                                <td>Position of dropdown arrow (trailing/leading)</td>
+                            </tr>
+                            <tr>
+                                <td><code>onChanged</code></td>
+                                <td>Function</td>
+                                <td>Callback with complete phone number</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="tip">
+                        <strong>🚀 Pro Tip:</strong> 
+                        The IntlPhoneField package provides automatic validation and formatting based on the selected country's 
+                        phone number format. You can access the complete number (with country code) using 
+                        <code>phone.completeNumber</code> in the onChanged callback.
+                    </div>
+                </section>
+
+                <!-- Text Area Section -->
+                <section id="text-area">
+                    <h2>📝 About Me Text Area</h2>
+
+                    <div class="screenshot-container">
+                        <img src="data:image/png;base64,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" alt="About Me Text Area">
+                        <div class="screenshot-label">About Me Text Area with Word Count</div>
+                    </div>
+
+                    <div class="field-card">
+                        <h4><span class="field-icon">✨</span>Key Features</h4>
+                        <ul class="feature-list">
+                            <li>Multi-line text input (minimum 5 lines)</li>
+                            <li>Real-time word count display (1/200 words)</li>
+                            <li>Maximum 200 words validation</li>
+                            <li>Visual feedback when limit exceeded (red text)</li>
+                            <li>Positioned word counter overlay (bottom-right)</li>
+                            <li>Required field validation with custom messages</li>
+                        </ul>
+                    </div>
+
+                    <h3>📝 Complete Implementation</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>about_me_field.dart</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                        </div>
+                        <div class="code-block">
+<pre><code><span class="keyword">Stack</span>(
+  children: [
+    Padding(
+      padding: EdgeInsets.only(bottom: 0.h),
+      child: <span class="keyword">CustomTextField</span>(
+        validator: (value) {
+          <span class="comment">// Check if empty</span>
+          <span class="keyword">if</span> (value == <span class="keyword">null</span> || value.trim().isEmpty) {
+            <span class="keyword">return</span> <span class="string">'Please enter about yourself'</span>;
+          }
+          <span class="comment">// Count words and validate</span>
+          <span class="keyword">int</span> words = value.trim().split(RegExp(r<span class="string">'\s+'</span>)).length;
+          <span class="keyword">if</span> (words > 200) {
+            <span class="keyword">return</span> <span class="string">'Maximum 200 words allowed'</span>;
+          }
+          <span class="keyword">return null</span>;
+        },
+        controller: controller.textController,
+        labelText: <span class="string">'About Me'</span>,
+        minLines: 5,
+      ),
+    ),
+    <span class="comment">// Word counter overlay</span>
+    <span class="keyword">Positioned</span>(
+      bottom: 10,
+      right: 10,
+      child: <span class="keyword">Obx</span>(
+        () => <span class="keyword">Text</span>(
+          <span class="string">'</span>${controller.wordCount.value}<span class="string">/200 words'</span>,
+          style: <span class="keyword">TextStyle</span>(
+            color: controller.wordCount.value > 200
+                ? Colors.red
+                : Colors.grey,
+            fontSize: 12,
+          ),
+        ),
+      ),
+    ),
+  ],
+)</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>✅ Validation Rules</h3>
+                    <table class="property-table">
+                        <thead>
+                            <tr>
+                                <th>Badge</th>
+                                <th>Condition</th>
+                                <th>Error Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-required">Required</span></td>
+                                <td>Field is empty or contains only whitespace</td>
+                                <td>"Please enter about yourself"</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-validation">Max Words</span></td>
+                                <td>Word count exceeds 200</td>
+                                <td>"Maximum 200 words allowed"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>🔢 Word Count Logic</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>word_count_logic.dart</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                        </div>
+                        <div class="code-block">
+<pre><code><span class="comment">// Controller method for real-time word counting</span>
+<span class="keyword">void</span> updateWordCount() {
+  String text = textController.text.trim();
+  <span class="keyword">if</span> (text.isEmpty) {
+    wordCount.value = 0;
+  } <span class="keyword">else</span> {
+    <span class="comment">// Split by whitespace and count</span>
+    wordCount.value = text.split(RegExp(r<span class="string">'\s+'</span>)).length;
+  }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="warning">
+                        <strong>⚠️ Important Note:</strong> 
+                        The word counter updates in real-time using GetX reactive programming. The text color changes to 
+                        <strong>red</strong> when exceeding 200 words, providing immediate visual feedback to the user. 
+                        Make sure to add the text controller listener in the controller's <code>onInit()</code> method.
+                    </div>
+                </section>
+
+                <!-- Controller Section -->
+                <section id="controller">
+                    <h2>🎮 GetX Controller</h2>
+
+                    <p style="font-size: 1.1em; margin-bottom: 30px;">
+                        The <code>DriverProfileController</code> manages the state and logic for all form fields using 
+                        GetX state management. It handles text controllers, word counting, and ensures proper resource cleanup.
+                    </p>
+
+                    <h3>📝 Complete Controller Implementation</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>driver_profile_controller.dart</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                        </div>
+                        <div class="code-block">
+<pre><code><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;
+<span class="keyword">import</span> <span class="string">'package:get/get.dart'</span>;
+<span class="keyword">import</span> <span class="string">'package:image_picker/image_picker.dart'</span>;
+
+<span class="keyword">class</span> DriverProfileController <span class="keyword">extends</span> GetxController {
+  <span class="comment">// Observable word count for About Me field</span>
+  <span class="keyword">RxInt</span> wordCount = 0.obs;
+  <span class="keyword">final int</span> maxWords = 200;
+  
+  <span class="comment">// Image picker for profile photo (optional feature)</span>
+  XFile? selectedImage;
+  
+  <span class="comment">// Date of Birth controller with default placeholder</span>
+  <span class="keyword">final</span> TextEditingController dateTime = TextEditingController(
+    text: <span class="string">'DD-MM-YYYY'</span>,
+  );
+  
+  <span class="comment">// About Me text controller</span>
+  <span class="keyword">final</span> TextEditingController textController = TextEditingController(text: <span class="string">' '</span>);
+
+  <span class="keyword">@override</span>
+  <span class="keyword">void</span> onInit() {
+    <span class="keyword">super</span>.onInit();
+    <span class="comment">// Add listener for real-time word counting</span>
+    textController.addListener(updateWordCount);
+  }
+
+  <span class="comment">/// Updates word count whenever text changes
+  /// Splits text by whitespace and counts resulting words</span>
+  <span class="keyword">void</span> updateWordCount() {
+    String text = textController.text.trim();
+    <span class="keyword">if</span> (text.isEmpty) {
+      wordCount.value = 0;
+    } <span class="keyword">else</span> {
+      <span class="comment">// RegExp matches one or more whitespace characters</span>
+      wordCount.value = text.split(RegExp(r<span class="string">'\s+'</span>)).length;
+    }
+  }
+
+  <span class="keyword">@override</span>
+  <span class="keyword">void</span> onClose() {
+    <span class="comment">// Clean up controllers to prevent memory leaks</span>
+    textController.dispose();
+    dateTime.dispose();
+    <span class="keyword">super</span>.onClose();
+  }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>📊 Controller Properties</h3>
+                    <table class="property-table">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>wordCount</code> <span class="badge badge-reactive">Reactive</span></td>
+                                <td>RxInt</td>
+                                <td>Reactive word count for About Me field (auto-updates UI)</td>
+                            </tr>
+                            <tr>
+                                <td><code>maxWords</code></td>
+                                <td>int</td>
+                                <td>Maximum allowed words (200)</td>
+                            </tr>
+                            <tr>
+                                <td><code>selectedImage</code> <span class="badge badge-optional">Optional</span></td>
+                                <td>XFile?</td>
+                                <td>Stores selected profile image (if needed)</td>
+                            </tr>
+                            <tr>
+                                <td><code>dateTime</code></td>
+                                <td>TextEditingController</td>
+                                <td>Controls Date of Birth field</td>
+                            </tr>
+                            <tr>
+                                <td><code>textController</code></td>
+                                <td>TextEditingController</td>
+                                <td>Controls About Me text field</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>🎯 Usage in Widget</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>driver_profile_page.dart</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                        </div>
+                        <div class="code-block">
+<pre><code><span class="keyword">class</span> DriverProfilePage <span class="keyword">extends</span> StatelessWidget {
+  <span class="comment">// Initialize controller using GetX dependency injection</span>
+  <span class="keyword">final</span> DriverProfileController controller = Get.put(DriverProfileController());
+  
+  <span class="keyword">@override</span>
+  Widget build(BuildContext context) {
+    <span class="keyword">return</span> Scaffold(
+      appBar: AppBar(title: <span class="keyword">Text</span>(<span class="string">'Driver Profile'</span>)),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(20),
+        child: <span class="keyword">Form</span>(
+          child: <span class="keyword">Column</span>(
+            children: [
+              <span class="comment">// Date of Birth Field</span>
+              <span class="comment">// Phone Number Field</span>
+              <span class="comment">// About Me Field</span>
+              
+              <span class="keyword">SizedBox</span>(height: 30),
+              <span class="keyword">ElevatedButton</span>(
+                onPressed: () {
+                  <span class="comment">// Validate and submit form</span>
+                },
+                child: <span class="keyword">Text</span>(<span class="string">'Submit'</span>),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tip">
+                        <strong>💡 Best Practice:</strong> 
+                        The controller properly disposes of text controllers in the <code>onClose()</code> method to prevent 
+                        memory leaks. Always remember to dispose of controllers when they're no longer needed. GetX handles 
+                        this automatically when the controller is removed from memory.
+                    </div>
+                </section>
+
+                <!-- Setup Section -->
+                <section id="setup">
+                    <h2>⚙️ Project Setup</h2>
+
+                    <h3>📦 Required Dependencies</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>pubspec.yaml</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                        </div>
+                        <div class="code-block">
+<pre><code>dependencies:
+  flutter:
+    sdk: flutter
+  
+  <span class="comment"># State Management</span>
+  get: <span class="string">^4.6.6</span>  <span class="comment"># Latest stable version</span>
+  
+  <span class="comment"># Phone Number Field</span>
+  intl_phone_field: <span class="string">^3.2.0</span>
+  
+  <span class="comment"># Image Picker (for profile photo feature)</span>
+  image_picker: <span class="string">^1.0.4</span>
+  
+  <span class="comment"># Responsive Size (for .h extension)</span>
+  flutter_screenutil: <span class="string">^5.9.0</span></code></pre>
+                        </div>
+                    </div>
+
+                    <h3>🚀 Installation Steps</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>Terminal</span>
+                        </div>
+                        <div class="code-block">
+<pre><code><span class="comment"># 1. Install dependencies</span>
+flutter pub get
+
+<span class="comment"># 2. Run code generation (if needed)</span>
+flutter pub run build_runner build --delete-conflicting-outputs
+
+<span class="comment"># 3. Run the app</span>
+flutter run</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>🎨 Custom Fonts Setup</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>pubspec.yaml - Fonts Section</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                        </div>
+                        <div class="code-block">
+<pre><code>flutter:
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>🎨 Color Configuration</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>app_colors.dart</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                        </div>
+                        <div class="code-block">
+<pre><code><span class="keyword">class</span> AppColors {
+  <span class="comment">// Label and text colors</span>
+  <span class="keyword">static const</span> Color labelTextColor = Color(0xFF333333);
+  <span class="keyword">static const</span> Color greyColor = Color(0xFF666666);
+  <span class="keyword">static const</span> Color greyColor500 = Color(0xFF9E9E9E);
+  
+  <span class="comment">// Background colors</span>
+  <span class="keyword">static const</span> Color whiteColor = Color(0xFFFFFFFF);
+  <span class="keyword">static const</span> Color grayShade100 = Color(0xFFE0E0E0);
+  
+  <span class="comment">// Cursor and app colors</span>
+  <span class="keyword">static const</span> Color appGreyColor = Color(0xFF757575);
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="field-card">
+                        <h4><span class="field-icon">✅</span>What's Included</h4>
+                        <ul class="feature-list">
+                            <li>GetX state management for reactive updates</li>
+                            <li>IntlPhoneField for international phone numbers</li>
+                            <li>ScreenUtil for responsive sizing (.h extension)</li>
+                            <li>Custom Poppins font family</li>
+                            <li>Predefined color scheme</li>
+                            <li>Image picker for profile photos (optional)</li>
+                        </ul>
+                    </div>
+
+                    <div class="note">
+                        <strong>📝 Note on Font Files:</strong> 
+                        Download the Poppins font family from <a href="https://fonts.google.com/specimen/Poppins" target="_blank" style="color: #667eea; font-weight: 600;">Google Fonts</a> 
+                        and place the .ttf files in your <code>assets/fonts/</code> directory.
+                    </div>
+                </section>
+
+                <!-- Best Practices Section -->
+                <section id="best-practices">
+                    <h2>✨ Best Practices & Tips</h2>
+
+                    <div class="comparison-grid">
+                        <div class="field-card">
+                            <h4>📝 Form Validation</h4>
+                            <ul class="feature-list">
+                                <li>Always wrap form fields in a Form widget with GlobalKey</li>
+                                <li>Validate on submit, not on every keystroke</li>
+                                <li>Provide clear, helpful error messages</li>
+                                <li>Use visual indicators for validation status</li>
+                            </ul>
+                        </div>
+
+                        <div class="field-card">
+                            <h4>🎮 State Management</h4>
+                            <ul class="feature-list">
+                                <li>Dispose of controllers in onClose()</li>
+                                <li>Use Rx variables for reactive updates</li>
+                                <li>Keep business logic in controller</li>
+                                <li>Initialize in onInit(), cleanup in onClose()</li>
+                            </ul>
+                        </div>
+
+                        <div class="field-card">
+                            <h4>👤 User Experience</h4>
+                            <ul class="feature-list">
+                                <li>Provide visual feedback for all actions</li>
+                                <li>Use appropriate keyboard types</li>
+                                <li>Show loading indicators for async ops</li>
+                                <li>Implement smooth transitions</li>
+                            </ul>
+                        </div>
+
+                        <div class="field-card">
+                            <h4>♿ Accessibility</h4>
+                            <ul class="feature-list">
+                                <li>Ensure sufficient color contrast</li>
+                                <li>Provide semantic labels</li>
+                                <li>Make touch targets 48x48 dp minimum</li>
+                                <li>Test with screen readers</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="warning">
+                        <strong>⚠️ Common Pitfalls to Avoid:</strong>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Forgetting to dispose of TextEditingControllers (memory leaks)</li>
+                            <li>Not using readOnly for date picker fields (allows invalid manual input)</li>
+                            <li>Hardcoding strings instead of using localization</li>
+                            <li>Not handling edge cases in word count (empty strings, special characters)</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Troubleshooting Section -->
+                <section id="troubleshooting">
+                    <h2>🔧 Troubleshooting Guide</h2>
+
+                    <div class="field-card">
+                        <h4>❌ Issue: Date picker not showing</h4>
+                        <p><strong>Solution:</strong> Ensure you have proper context available. If using in a custom widget, pass context as a parameter. Also make sure the field is not disabled.</p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4>❌ Issue: Word count not updating</h4>
+                        <p><strong>Solution:</strong> Make sure the listener is added in <code>onInit()</code> and the controller is properly initialized with <code>Get.put()</code>. Check that you're using <code>Obx()</code> wrapper for reactive updates.</p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4>❌ Issue: IntlPhoneField not found</h4>
+                        <p><strong>Solution:</strong> Run <code>flutter pub get</code> to install the intl_phone_field package. Make sure it's added to pubspec.yaml with the correct version.</p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4>❌ Issue: Memory leak warnings</h4>
+                        <p><strong>Solution:</strong> Always dispose of TextEditingControllers in the controller's <code>onClose()</code> method. GetX will automatically call this when the controller is removed.</p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4>❌ Issue: .h extension not working</h4>
+                        <p><strong>Solution:</strong> Install and initialize flutter_screenutil package. Initialize it in your main.dart with <code>ScreenUtil.init(context, designSize: Size(375, 812))</code>.</p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4>❌ Issue: Phone number validation failing</h4>
+                        <p><strong>Solution:</strong> IntlPhoneField has built-in validation. Make sure you're accessing the complete number correctly using <code>phone.completeNumber</code> in the onChanged callback.</p>
+                    </div>
+                </section>
+            </div>
+
+            <footer>
+                <p>&copy; 2026 Flutter Form Fields Documentation</p>
+                <p>Created with ❤️ for the Flutter Community</p>
+                <div class="footer-links">
+                    <a href="https://flutter.dev" target="_blank">Flutter Docs</a>
+                    <a href="https://pub.dev/packages/get" target="_blank">GetX Package</a>
+                    <a href="https://pub.dev/packages/intl_phone_field" target="_blank">IntlPhoneField</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (winScroll > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Copy code functionality
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-container').querySelector('.code-block');
+            const code = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.background = '#27AE60';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                }, 2000);
+            });
+        }
+
+        // Active nav link highlighting
+        window.addEventListener('scroll', () => {
+            let current = '';
+            document.querySelectorAll('section').forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

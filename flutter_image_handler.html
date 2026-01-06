@@ -532,164 +532,162 @@ class ImagePickerService extends GetxService {
                         <p class="text-gray-600 mt-2">Universal widget for displaying images from any source</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-b-xl">
-                        <pre><code class="language-dart">// lib/widgets/global_image_widget.dart
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+                        <pre><code class="language-dart">
+                            
+class ImageHandler {
+  ///=====>>>>>> Image Related work are here =====>>>>>> ////
+  static final _imagePicker = ImagePicker();
 
-class GlobalImageWidget extends StatelessWidget {
-  final String? imagePath;
-  final File? imageFile;
-  final String? networkUrl;
-  final String? assetPath;
-  final double? width;
-  final double? height;
-  final BoxFit fit;
-  final BorderRadius? borderRadius;
-  final Color? backgroundColor;
-  final Widget? placeholder;
-  final Widget? errorWidget;
-  final bool isCircular;
-  final double? circularRadius;
-  final Border? border;
-  final List&lt;BoxShadow&gt;? boxShadow;
+  // Camera Image Picker Related work
+  static Future<XFile?> cameraImagePicker() async {
+    return await _imagePicker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 80,
+      maxHeight: 800,
+      maxWidth: 800,
+    );
+  }
 
-  const GlobalImageWidget({
-    Key? key,
-    this.imagePath,
-    this.imageFile,
-    this.networkUrl,
-    this.assetPath,
-    this.width,
-    this.height,
-    this.fit = BoxFit.cover,
-    this.borderRadius,
-    this.backgroundColor,
-    this.placeholder,
-    this.errorWidget,
-    this.isCircular = false,
-    this.circularRadius,
-    this.border,
-    this.boxShadow,
-  }) : super(key: key);
+  // Media Upload Image Picker Related work
+  static Future<XFile?> galleryImagePicker() async {
+    return await _imagePicker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 800,
+      maxHeight: 800,
+      imageQuality: 80,
+      preferredCameraDevice: CameraDevice.front,
+      requestFullMetadata: true,
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    Widget imageWidget;
-
-    if (imageFile != null) {
-      imageWidget = _buildFileImage();
-    } else if (networkUrl != null && networkUrl!.isNotEmpty) {
-      imageWidget = _buildNetworkImage();
-    } else if (assetPath != null && assetPath!.isNotEmpty) {
-      imageWidget = _buildAssetImage();
-    } else if (imagePath != null && imagePath!.isNotEmpty) {
-      imageWidget = _buildAutoDetectImage();
-    } else {
-      imageWidget = _buildPlaceholder();
-    }
-
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: isCircular
-            ? BorderRadius.circular(circularRadius ?? (width ?? 100) / 2)
-            : borderRadius,
-        border: border,
-        boxShadow: boxShadow,
+  static void bottomImageSelector(
+      BuildContext context, {
+        Color? backgroundColor,
+        double? height,
+        double? borderRadius,
+        double? spacing,
+        EdgeInsets? padding,
+        MainAxisAlignment? alignment,
+        // Camera option
+        bool showCamera = true,
+        String? cameraLabel,
+        IconData? cameraIcon,
+        String? cameraImagePath, // For custom image instead of icon
+        double? cameraIconSize,
+        Color? cameraIconColor,
+        TextStyle? cameraTextStyle,
+        // Gallery option
+        bool showGallery = true,
+        String? galleryLabel,
+        IconData? galleryIcon,
+        String? galleryImagePath, // For custom image instead of icon
+        double? galleryIconSize,
+        Color? galleryIconColor,
+        TextStyle? galleryTextStyle,
+        // General styling
+        double? iconSize,
+        Color? iconColor,
+        TextStyle? textStyle,
+        double? spaceBetweenIconAndText,
+        required Function(XFile file) onImageSelected,
+      }) {
+    showModalBottomSheet(
+      isDismissible: true,
+      enableDrag: true,
+      backgroundColor: backgroundColor ?? Colors.white,
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(borderRadius ?? 20),
+        ),
       ),
-      child: ClipRRect(
-        borderRadius: isCircular
-            ? BorderRadius.circular(circularRadius ?? (width ?? 100) / 2)
-            : borderRadius ?? BorderRadius.zero,
-        child: imageWidget,
-      ),
-    );
-  }
+      builder: (context) {
+        return Container(
+          height: height ?? 160,
+          padding: padding ?? const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            mainAxisAlignment: alignment ?? MainAxisAlignment.spaceEvenly,
+            children: [
+              // Camera option
+              if (showCamera)
+                GestureDetector(
+                  onTap: () async {
+                    final image = await cameraImagePicker();
+                    if (image != null) {
+                      onImageSelected(image);
+                    }
+                    Navigator.pop(context);
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Show custom image or icon for camera
+                      if (cameraImagePath != null)
+                        Image.asset(
+                          cameraImagePath,
+                          width: cameraIconSize ?? iconSize ?? 40,
+                          height: cameraIconSize ?? iconSize ?? 40,
+                          fit: BoxFit.cover,
+                        )
+                      else
+                        Icon(
+                          cameraIcon ?? Icons.camera_alt,
+                          size: cameraIconSize ?? iconSize ?? 40,
+                          color: cameraIconColor ?? iconColor,
+                        ),
+                      SizedBox(height: spaceBetweenIconAndText ?? 8),
+                      Text(
+                        cameraLabel ?? "Camera",
+                        style: cameraTextStyle ?? textStyle,
+                      ),
+                    ],
+                  ),
+                ),
 
-  Widget _buildFileImage() {
-    return Image.file(
-      imageFile!,
-      width: width,
-      height: height,
-      fit: fit,
-      errorBuilder: (context, error, stackTrace) =>
-          errorWidget ?? _buildErrorWidget(),
-    );
-  }
+              // Spacing between options
+              if (showCamera && showGallery)
+                SizedBox(width: spacing ?? 0),
 
-  Widget _buildNetworkImage() {
-    return CachedNetworkImage(
-      imageUrl: networkUrl!,
-      width: width,
-      height: height,
-      fit: fit,
-      placeholder: (context, url) => placeholder ?? _buildPlaceholder(),
-      errorWidget: (context, url, error) =>
-          errorWidget ?? _buildErrorWidget(),
-    );
-  }
-
-  Widget _buildAssetImage() {
-    return Image.asset(
-      assetPath!,
-      width: width,
-      height: height,
-      fit: fit,
-      errorBuilder: (context, error, stackTrace) =>
-          errorWidget ?? _buildErrorWidget(),
-    );
-  }
-
-  Widget _buildAutoDetectImage() {
-    if (imagePath!.startsWith('http://') || imagePath!.startsWith('https://')) {
-      return _buildNetworkImage();
-    } else if (imagePath!.startsWith('/') || imagePath!.contains('storage')) {
-      return Image.file(
-        File(imagePath!),
-        width: width,
-        height: height,
-        fit: fit,
-        errorBuilder: (context, error, stackTrace) =>
-            errorWidget ?? _buildErrorWidget(),
-      );
-    } else {
-      return _buildAssetImage();
-    }
-  }
-
-  Widget _buildPlaceholder() {
-    return placeholder ??
-        Container(
-          width: width,
-          height: height,
-          color: Colors.grey[300],
-          child: Icon(
-            Icons.image,
-            size: (width != null && height != null)
-                ? (width! < height! ? width! * 0.4 : height! * 0.4)
-                : 50,
-            color: Colors.grey[400],
+              // Gallery option
+              if (showGallery)
+                GestureDetector(
+                  onTap: () async {
+                    final image = await galleryImagePicker();
+                    if (image != null) {
+                      onImageSelected(image);
+                    }
+                    Navigator.pop(context);
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Show custom image or icon for gallery
+                      if (galleryImagePath != null)
+                        Image.asset(
+                          galleryImagePath,
+                          width: galleryIconSize ?? iconSize ?? 40,
+                          height: galleryIconSize ?? iconSize ?? 40,
+                          fit: BoxFit.cover,
+                        )
+                      else
+                        Icon(
+                          galleryIcon ?? Icons.photo_library,
+                          size: galleryIconSize ?? iconSize ?? 40,
+                          color: galleryIconColor ?? iconColor,
+                        ),
+                      SizedBox(height: spaceBetweenIconAndText ?? 8),
+                      Text(
+                        galleryLabel ?? "Gallery",
+                        style: galleryTextStyle ?? textStyle,
+                      ),
+                    ],
+                  ),
+                ),
+            ],
           ),
         );
-  }
-
-  Widget _buildErrorWidget() {
-    return errorWidget ??
-        Container(
-          width: width,
-          height: height,
-          color: Colors.grey[300],
-          child: Icon(
-            Icons.broken_image,
-            size: (width != null && height != null)
-                ? (width! < height! ? width! * 0.4 : height! * 0.4)
-                : 50,
-            color: Colors.red[300],
-          ),
-        );
+      },
+    );
   }
 }</code></pre>
                     </div>
